@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 
-const storedHash = "$2b$10$X1YJWnVJTBUhuwjwHnPeCuVEMkujDBDT3KVBTJWqAI7IvwzoDEy/S"; // The hash from your database
+const storedHash = "$2b$10"; // The hash from your database
 const inputPassword = ""; // The password you're trying to check
 
 bcrypt.compare(inputPassword, storedHash, (err, result) => {
