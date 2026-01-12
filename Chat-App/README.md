@@ -11,7 +11,7 @@ This is a group chat application built with Node.js, Socket.io and Moment. The a
 ## Project Setup
 To run this project on your local machine, follow the steps below:
 
- 1. Clone the repository using git clone `https://github.com/vishnusatheeshpulickal/Chat-App.git`
+1. Clone the repository using git clone 
 2. Navigate to the project directory using `cd Chat-App`
 3. Install dependencies using `npm install`
 4. node moderatorRoom-working.js "Myroom" "admin123" "guest123"
