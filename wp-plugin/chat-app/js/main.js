@@ -20,8 +20,8 @@ let openedPrivateChats = new Set();
 
 
 const username = "tester1"; 
-const room = "mytest2";
-const password = "1q";
+const room = "myroom";
+const password = "guest123";
 console.log("Logged in as:", username);
 
 //const password = "moderatorSecret";
@@ -1038,3 +1038,4 @@ if (replyingToData) {
   });
 
 });
+
