@@ -77,7 +77,7 @@ function chat_app_bubble_button() {
         }
 
        #chat-popup {
-    display: none; /* 🔴 ADD THIS LINE */
+    display: none; 
     flex-direction: column;
     position: fixed;
     bottom: 90px;
