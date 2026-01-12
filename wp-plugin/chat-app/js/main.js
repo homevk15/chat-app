@@ -695,14 +695,14 @@ socket.on('privateChatHistory', ({ participants, messages }) => {
   messagesDiv.innerHTML = '';
   privateMessagesMap.clear();
 
-  // 1️⃣ Store all messages first
- // 1️⃣ Store all messages first with normalized ID
+  // Store all messages first
+ // Store all messages first with normalized ID
 messages.forEach(msg => {
   const id = getMessageId(msg);
   if (id) privateMessagesMap.set(id, msg);
 });
 
-// 2️⃣ Resolve replyingTo references
+// Resolve replyingTo references
 messages.forEach(msg => {
   // Normalize to a common property
   if (msg.replyToMessageId && !msg.replyingTo) {
@@ -714,7 +714,7 @@ messages.forEach(msg => {
 });
 
 
-// 3️⃣ Append messages
+// Append messages
 messages.forEach(msg => appendMessageToPrivateChat(otherUsername, msg));
 
 });
@@ -1038,4 +1038,5 @@ if (replyingToData) {
   });
 
 });
+
 
