@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="style.css" type="text/css" />
+  <title>FreeChat App</title>
+</head>
+
+<body>
+  <div class="chat-container">
+    <main class="chat-main">
+      <div class="chat-sidebar">
+        <h3><i class="fas fa-comments"></i> Room Name:</h3>
+        <h2 id="room-name">JavaScript</h2>
+        <h3><i class="fas fa-users"></i> Users</h3>
+        <ul id="users">
+          <li data-username="Vishnu" class="user-link">Vishnu</li>
+          <li data-username="Jishnu" class="user-link">Jishnu</li>
+          <li data-username="Sebin" class="user-link">Sebin</li>
+          <li data-username="Binu" class="user-link">Binu</li>
+          <li data-username="Jishwan" class="user-link">Jishwan</li>
+        </ul>
+        <h3><i class="fas fa-ban"></i> Blocked Users</h3>
+        <ul id="blocked-users">
+          <!-- Blocked users will be appended here -->
+        </ul>
+      </div>
+
+      <div class="chat-messages">
+        <!-- Public chat messages will appear here -->
+      </div>
+
+   <div id="private-chat-wrapper">
+  <div id="private-tabs" class="private-tabs">
+    <!-- Private chat tabs -->
+  </div>
+
+  <div id="private-chat" class="private-chat">
+    <!-- Chat boxes for each user -->
+  </div>
+ </div> 
+
+      <!--  End private chat section -->
+    </main>
+
+    <div class="chat-form-container">
+      <div id="reply-preview" class="reply-preview" style="display: none;"></div>
+      <form id="chat-form">
+        <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
+        <input type="hidden" id="reply-to-id" name="replyTo" />
+        <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send</button>
+      </form>
+    </div>
+  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.2/qs.min.js"
+        integrity="sha512-ErYZLDi4WRoox2JhOIADWBydTRhMJ0KIXnv5C1GvuY8YooLGapnebaM3iRGhwS6/E9ONXj0MRXp6bhu73sdFkg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+       <script src="https://yourwebsite.com/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        const socket = io('http://192.168.10.120:3001');
+
+        // Function to get the blocked users
+        socket.emit('getBlockedUsers');
+
+        // Listen for the blocked users list
+        socket.on('blockedUsersList', (blockedUsers) => {
+            const blockedUsersList = document.getElementById('blocked-users');
+            blockedUsersList.innerHTML = ''; // Clear existing list
+
+            blockedUsers.forEach(username => {
+                const li = document.createElement('li');
+                li.textContent = username;
+
+                // Create the unblock button
+                const unblockButton = document.createElement('button');
+                unblockButton.textContent = 'Unblock';
+                unblockButton.className = 'unblock-button';
+                unblockButton.onclick = () => {
+                    socket.emit('unblockUser', username); // Emit unblock event
+                };
+
+                li.appendChild(unblockButton);
+                blockedUsersList.appendChild(li);
+            });
+        });
+
+        // Listen for successful unblocking
+        socket.on('userUnblocked', (username) => {
+            console.log(`${username} has been unblocked.`);
+            // You might want to refresh the blocked users list here
+            socket.emit('getBlockedUsers');
+        });
+    </script>
+</body>
+
+</html>
